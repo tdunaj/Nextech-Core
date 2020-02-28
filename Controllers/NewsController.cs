@@ -41,5 +41,11 @@ namespace NextechAppWebApi.Controllers
 
             return list.Where(x => x.By == author);
         }
+
+        [HttpGet("article/{articleId}")]
+        public async Task<string> Get(int articleId)
+        {
+            return await this.newsRepository.GetArticle(articleId);
+        }
     }
 }

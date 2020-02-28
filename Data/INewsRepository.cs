@@ -9,5 +9,6 @@ namespace NextechAppWebApi.Data
     public interface INewsRepository
     {
         Task<IEnumerable<NewsItem>> GetMostRecentNews();
+        Task<string> GetArticle(int id);
     }
 }

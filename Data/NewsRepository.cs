@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NextechAppWebApi.Models;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,6 @@ namespace NextechAppWebApi.Data
     {
         private const int NumberOfNews = 50;
 
-        //private IMemoryCache cache;
-
-        //public NewsRepository() {}
-        //public NewsRepository(IMemoryCache cache)
-        //{
-        //    this.cache = cache;
-        //}
-
         public async Task<IEnumerable<NewsItem>> GetMostRecentNews()
         {            
             List<NewsItem> newsList = new List<NewsItem>();
@@ -32,7 +25,6 @@ namespace NextechAppWebApi.Data
                 using (var response = await httpClient.GetAsync("https://hacker-news.firebaseio.com/v0/newstories.json"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    //newsList = JsonConvert.DeserializeObject<List<NewsItem>>(apiResponse);
                     newsIds = JsonConvert.DeserializeObject<List<int>>(apiResponse);                    
                 }
             }
@@ -46,10 +38,8 @@ namespace NextechAppWebApi.Data
                         using (var response = await httpClient.GetAsync($"https://hacker-news.firebaseio.com/v0/item/{newsIds[i]}.json"))
                         {
                             string apiResponse = await response.Content.ReadAsStringAsync();
-                            //newsList = JsonConvert.DeserializeObject<List<NewsItem>>(apiResponse);
                             var newsItem = JsonConvert.DeserializeObject<NewsItem>(apiResponse);
 
-                            //if (!string.IsNullOrEmpty(newsItem.By))
                             if (newsItem != null)
                                 newsList.Add(newsItem);
                         }
@@ -57,10 +47,25 @@ namespace NextechAppWebApi.Data
                 }
             }
 
-            //cache.Set("test", DateTime.Now.ToString());
-            //cache.Set("NewsList", newsList);
-
+        
             return newsList;
+        }
+
+        public async Task<string> GetArticle(int id)
+        {
+            string article;
+
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync($"https://hacker-news.firebaseio.com/v0/item/{id}.json"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    var data = JObject.Parse(apiResponse);
+                    article = (string)data.SelectToken("text") ?? (string)data.SelectToken("url");                    
+                }             
+            }
+
+            return article;
         }
     }
 }
