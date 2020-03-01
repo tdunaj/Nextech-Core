@@ -24,28 +24,29 @@ namespace NextechAppWebApi.Controllers
         }
 
         public async Task<IEnumerable<NewsItem>> Get()
-        {            
-            return await cache.GetOrCreateAsync<IEnumerable<NewsItem>>("NewsList",
-                cacheEntry => {
-                    return this.newsRepository.GetMostRecentNews();
-                });         
+        {
+            return await this.GetNews();
         }
 
         [HttpGet("{author}")]
         public async Task<IEnumerable<NewsItem>> Get(string author)
         {
-            var list =  await cache.GetOrCreateAsync<IEnumerable<NewsItem>>("NewsList",
-                cacheEntry => {
-                    return this.newsRepository.GetMostRecentNews();
-                });
 
-            return list.Where(x => x.By == author);
+            return (await this.GetNews()).Where(x => x.By == author);
         }
 
         [HttpGet("article/{articleId}")]
         public async Task<string> Get(int articleId)
         {
             return await this.newsRepository.GetArticle(articleId);
+        }
+
+        private async Task<IEnumerable<NewsItem>> GetNews()
+        {
+            return await cache.GetOrCreateAsync<IEnumerable<NewsItem>>("NewsList",
+                cacheEntry => {
+                    return this.newsRepository.GetMostRecentNews();
+            });
         }
     }
 }
