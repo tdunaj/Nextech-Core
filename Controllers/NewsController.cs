@@ -15,7 +15,7 @@ namespace NextechAppWebApi.Controllers
     public class NewsController : ControllerBase
     {
         private readonly INewsRepository newsRepository;
-        private IMemoryCache cache;
+        private readonly IMemoryCache cache;
 
         public NewsController(INewsRepository newsRepository, IMemoryCache cache)
         {

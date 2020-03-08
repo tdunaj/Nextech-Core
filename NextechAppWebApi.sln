@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextechAppWebApi", "NextechAppWebApi.csproj", "{56DE9D4A-6A0C-4C19-A4C9-D0D159032010}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "..\UnitTests\UnitTests.csproj", "{E57B3185-D87E-4CEA-B877-EEB8D9330A2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{21CD6F1E-1E38-4E71-B17D-B1D5B6F3CA3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{56DE9D4A-6A0C-4C19-A4C9-D0D159032010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56DE9D4A-6A0C-4C19-A4C9-D0D159032010}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56DE9D4A-6A0C-4C19-A4C9-D0D159032010}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E57B3185-D87E-4CEA-B877-EEB8D9330A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E57B3185-D87E-4CEA-B877-EEB8D9330A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E57B3185-D87E-4CEA-B877-EEB8D9330A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E57B3185-D87E-4CEA-B877-EEB8D9330A2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21CD6F1E-1E38-4E71-B17D-B1D5B6F3CA3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21CD6F1E-1E38-4E71-B17D-B1D5B6F3CA3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21CD6F1E-1E38-4E71-B17D-B1D5B6F3CA3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21CD6F1E-1E38-4E71-B17D-B1D5B6F3CA3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

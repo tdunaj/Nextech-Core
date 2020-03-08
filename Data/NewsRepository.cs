@@ -22,28 +22,22 @@ namespace NextechAppWebApi.Data
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://hacker-news.firebaseio.com/v0/newstories.json"))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    newsIds = JsonConvert.DeserializeObject<List<int>>(apiResponse);                    
-                }
+                using var response = await httpClient.GetAsync("https://hacker-news.firebaseio.com/v0/newstories.json");
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                newsIds = JsonConvert.DeserializeObject<List<int>>(apiResponse);
             }
 
             if (newsIds.Any())
             {
-                using (var httpClient = new HttpClient())
+                using var httpClient = new HttpClient();
+                for (int i = 0; i < NumberOfNews; i++)
                 {
-                    for(int i = 0; i < NumberOfNews; i++)
-                    { 
-                        using (var response = await httpClient.GetAsync($"https://hacker-news.firebaseio.com/v0/item/{newsIds[i]}.json"))
-                        {
-                            string apiResponse = await response.Content.ReadAsStringAsync();
-                            var newsItem = JsonConvert.DeserializeObject<NewsItem>(apiResponse);
+                    using var response = await httpClient.GetAsync($"https://hacker-news.firebaseio.com/v0/item/{newsIds[i]}.json");
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    var newsItem = JsonConvert.DeserializeObject<NewsItem>(apiResponse);
 
-                            if (newsItem != null)
-                                newsList.Add(newsItem);
-                        }
-                    }
+                    if (newsItem != null)
+                        newsList.Add(newsItem);
                 }
             }
 
@@ -57,12 +51,10 @@ namespace NextechAppWebApi.Data
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync($"https://hacker-news.firebaseio.com/v0/item/{id}.json"))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    var data = JObject.Parse(apiResponse);
-                    article = (string)data.SelectToken("text") ?? (string)data.SelectToken("url");                    
-                }             
+                using var response = await httpClient.GetAsync($"https://hacker-news.firebaseio.com/v0/item/{id}.json");
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                var data = JObject.Parse(apiResponse);
+                article = (string)data.SelectToken("text") ?? (string)data.SelectToken("url");
             }
 
             return article;
